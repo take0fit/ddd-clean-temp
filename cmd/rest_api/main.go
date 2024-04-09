@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/LifeSports/lispo-module/internal/common/db"
-	"github.com/LifeSports/lispo-module/internal/common/http"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/take0fit/ddd-clean-temp/internal/common/db"
+	"github.com/take0fit/ddd-clean-temp/internal/common/http"
 	"log"
 	"os"
 )

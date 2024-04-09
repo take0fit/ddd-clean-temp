@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/take0fit/ddd-clean-temp/internal/user/application/service"
+	"github.com/take0fit/ddd-clean-temp/internal/user/interface/presenter/response"
 	"net/http"
 )
 
@@ -20,5 +21,8 @@ func (ctrl *UserController) GetUsers(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(http.StatusOK, users)
+
+	usersResponse := response.NewUsersResponse(users)
+
+	ctx.JSON(http.StatusOK, usersResponse)
 }

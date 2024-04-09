@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"github.com/take0fit/ddd-clean-temp/internal/user/domain/entity"
+	"github.com/take0fit/ddd-clean-temp/internal/user/application/dto"
 	"github.com/take0fit/ddd-clean-temp/internal/user/domain/repository"
 )
 
@@ -21,6 +21,11 @@ func NewUserService(
 	}
 }
 
-func (s *userService) GetAllUsers(ctx context.Context) ([]entity.User, error) {
-	return s.repo.GetAll(ctx)
+func (s *userService) GetAllUsers(ctx context.Context) (dto.OutputUsers, error) {
+	userEntityList, err := s.repo.GetAll(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return dto.NewOutputUsers(userEntityList), nil
 }
