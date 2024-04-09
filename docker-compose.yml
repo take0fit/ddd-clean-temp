@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  app:
+    build:
+      dockerfile: ./docker/local/Dockerfile
+      context: .
+      target: debugger
+
+    env_file: .env
+    ports:
+      - 8080:8080
+      - 2345:2345
+    volumes:
+      - .:/go/src/github.com/take0fit/ddd-clean-temp
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres_user
+      POSTGRES_PASSWORD: postgres_password
+      POSTGRES_DB: postgres_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
