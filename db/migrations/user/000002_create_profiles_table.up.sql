@@ -1,0 +1,10 @@
+CREATE TABLE profiles
+(
+    id         SERIAL PRIMARY KEY,
+    user_id    INTEGER NOT NULL,
+    hobbies    TEXT,
+    bio        TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);
