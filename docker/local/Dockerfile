@@ -10,30 +10,16 @@ RUN apt-get update \
     && apt-get autoremove -yqq --purge wget && rm -rf /var/lib/apt/lists/*
 
 RUN go install github.com/rakyll/gotest@latest \
-  && go install github.com/cosmtrek/air@latest \
+  && go install github.com/air-verse/air@latest \
   && go install github.com/go-delve/delve/cmd/dlv@latest
+
 WORKDIR /go/src/github.com/take0fit/ddd-clean-temp
 ENV CGO_ENABLED=0 GOOS=linux
+
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
+
 EXPOSE 8080
 
-CMD ["dockerize", "-wait", "tcp://db:3306", "-timeout", "60s", "air", "-c", ".air.toml"]
-
-
-
-#
-#RUN go build -o main ./cmd/api-server/main.go
-#RUN go build -o migration ./cmd/migration/migration.go
-#
-#RUN chmod +x main migration
-#
-## 実行ステージ
-#FROM alpine:3.15
-#
-#WORKDIR /app
-#
-## ビルドステージから実行ファイルをコピー
-#COPY --from=builder /app/main .
-#COPY --from=builder /app/migration .
+CMD ["dockerize", "-wait", "tcp://auth_db:5432", "-wait", "tcp://user_db:5432", "-timeout", "60s", "air", "-c", ".air.toml"]
