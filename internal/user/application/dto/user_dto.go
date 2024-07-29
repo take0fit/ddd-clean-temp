@@ -1,6 +1,8 @@
 package dto
 
-import "github.com/take0fit/ddd-clean-temp/internal/user/domain/entity"
+import (
+	"github.com/take0fit/ddd-clean-temp/internal/user/domain/entity"
+)
 
 type OutputUsers []*OutputUser
 
@@ -9,7 +11,7 @@ type OutputUser struct {
 	Name string
 }
 
-func NewOutputUsers(users []*entity.User) OutputUsers {
+func NewOutputUsers(users []*entity.User) (OutputUsers, error) {
 	outputUsers := make([]*OutputUser, len(users))
 	for i, user := range users {
 		outputUsers[i] = &OutputUser{
@@ -18,5 +20,5 @@ func NewOutputUsers(users []*entity.User) OutputUsers {
 		}
 	}
 
-	return outputUsers
+	return outputUsers, nil
 }

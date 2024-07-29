@@ -1,4 +1,4 @@
-package service
+package usecase
 
 import (
 	"context"
@@ -6,26 +6,26 @@ import (
 	"github.com/take0fit/ddd-clean-temp/internal/user/domain/repository"
 )
 
-type userService struct {
+type UserUsecaseImpl struct {
 	repo repository.UserRepository
 	tx   Transaction
 }
 
-func NewUserService(
+func NewUserUsecase(
 	repo repository.UserRepository,
 	tx Transaction,
-) UserService {
-	return &userService{
+) UserUsecase {
+	return &UserUsecaseImpl{
 		repo: repo,
 		tx:   tx,
 	}
 }
 
-func (s *userService) GetAllUsers(ctx context.Context) (dto.OutputUsers, error) {
+func (s *UserUsecaseImpl) GetAllUsers(ctx context.Context) (dto.OutputUsers, error) {
 	userEntityList, err := s.repo.GetAll(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	return dto.NewOutputUsers(userEntityList), nil
+	return dto.NewOutputUsers(userEntityList)
 }
