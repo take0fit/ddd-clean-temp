@@ -2,7 +2,8 @@ go 1.22.2
 
 use (
 	./cmd/api
+	./cmd/migrate
 	./internal/auth
 	./internal/user
-	./cmd/migrate
+	./pkg/util
 )

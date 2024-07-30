@@ -13,8 +13,8 @@ type InputLoginDTO struct {
 func NewInputLoginDTO(email, password string) (*InputLoginDTO, error) {
 	vc := validationcontext.NewValidationContext()
 
-	emailVO := valueobject.NewEmail(email, vc)
-	passwordVO := valueobject.NewPassword(password, vc)
+	emailVO := valueobject.NewEmail(email, vc, true)
+	passwordVO := valueobject.NewPassword(password, vc, true)
 
 	if vc.HasErrors() {
 		return nil, vc.AggregateError()

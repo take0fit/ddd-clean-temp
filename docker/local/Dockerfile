@@ -16,8 +16,19 @@ RUN go install github.com/rakyll/gotest@latest \
 WORKDIR /go/src/github.com/take0fit/ddd-clean-temp
 ENV CGO_ENABLED=0 GOOS=linux
 
-COPY go.mod go.sum ./
-RUN go mod download
+# モジュールごとの go.mod をコピー
+RUN ls
+COPY cmd/api/go.mod cmd/api/go.sum cmd/api/
+COPY cmd/migrate/go.mod cmd/migrate/go.sum cmd/migrate/
+COPY internal/auth/go.mod internal/auth/go.sum internal/auth/
+COPY internal/user/go.mod internal/user/go.sum internal/user/
+COPY pkg/util/go.mod pkg/util/go.sum pkg/util/
+COPY go.work go.work.sum ./
+
+# 依存関係をダウンロード
+RUN go work sync
+
+# プロジェクトの全コードをコピー
 COPY . .
 
 EXPOSE 8080
